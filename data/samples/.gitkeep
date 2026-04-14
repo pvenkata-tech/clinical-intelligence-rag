@@ -1,0 +1,8 @@
+# Placeholder for sample medical documents
+# This directory contains test PDFs for local development
+# Important: Ensure any medical documents here are properly anonymized (HIPAA compliant)
+# 
+# Usage:
+#   - Store sample PDFs in data/samples/
+#   - Load them in tests via core/ingestion.py
+#   - Never commit real patient data (this folder is .gitignored)

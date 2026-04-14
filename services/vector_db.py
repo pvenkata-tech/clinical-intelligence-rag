@@ -1,28 +1,26 @@
-import pinecone
+from pinecone import Pinecone
+from langchain_pinecone import PineconeVectorStore
+from services.embeddings import EmbeddingService
 from core.config import settings
 
-class VectorDBService:
+class VectorStoreManager:
     def __init__(self):
-        # In Pinecone 3.x+ (2026), we use the Pinecone class directly
-        self.pc = pinecone.Pinecone(api_key=settings.PINECONE_API_KEY)
+        self.pc = Pinecone(api_key=settings.PINECONE_API_KEY)
         self.index_name = settings.PINECONE_INDEX_NAME
+        self.embeddings = EmbeddingService.get_embeddings()
 
-    def get_index(self):
-        """Returns the active Pinecone index."""
-        return self.pc.Index(self.index_name)
-
-    def upsert_vectors(self, vectors: list):
-        """Standardizes the upsert process."""
-        index = self.get_index()
-        # Ensure we are batching for production stability
-        return index.upsert(vectors=vectors, namespace="clinical-docs")
-
-    def query_similarity(self, vector: list, top_k: int = 5):
-        """Searches for the most relevant medical context."""
-        index = self.get_index()
-        return index.query(
-            vector=vector,
-            top_k=top_k,
-            include_metadata=True,
-            namespace="clinical-docs"
+    def get_vector_store(self):
+        return PineconeVectorStore(
+            index_name=self.index_name,
+            embedding=self.embeddings
         )
+
+    def add_documents(self, documents):
+        """Adds processed LangChain documents to Pinecone"""
+        vector_store = self.get_vector_store()
+        return vector_store.add_documents(documents)
+
+    def similarity_search(self, query: str, k: int = 4):
+        """Retrieves the most relevant clinical context"""
+        vector_store = self.get_vector_store()
+        return vector_store.similarity_search(query, k=k)

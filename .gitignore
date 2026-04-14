@@ -1,6 +1,30 @@
-# gitignore template for LangChain products, e.g., LangGraph, LangSmith
-# website: https://www.langchain.com/
-# website: https://www.langchain.com/langgraph
+# --- Python Environment ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+.python-version
 
-# LangGraph
-.langgraph_api/
+# --- Secrets & Config (CRITICAL) ---
+.env
+.env.local
+.env.*
+!.env.example
+aws/credentials
+aws/config
+
+# --- IDE & OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Vector DB & Data (HIPAA SENSITIVE) ---
+*.log
+data/raw/
+data/processed/
+data/samples/*.pdf
+# Ensure no real patient data is committed

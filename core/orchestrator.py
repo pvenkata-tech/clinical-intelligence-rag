@@ -1,9 +1,13 @@
 import os
+import time
+import uuid
+from datetime import datetime
 from models.factory import ModelFactory
 from core.ingestion import ClinicalIngestor
 from core.config import settings
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
+from services.monitoring import get_monitoring_service, QueryMetrics
 
 class ClinicalRAGOrchestrator:
     def __init__(self):
@@ -42,5 +46,52 @@ class ClinicalRAGOrchestrator:
         return prompt | self.model | self.parser
 
     def query(self, question: str, context: str):
-        chain = self.get_rag_chain(context)
-        return chain.invoke({"question": question, "context": context})
+        """Execute RAG query with automatic metric capture"""
+        query_id = str(uuid.uuid4())
+        start_time = time.time()
+        answer = ""
+        error = None
+        
+        try:
+            chain = self.get_rag_chain(context)
+            answer = chain.invoke({"question": question, "context": context})
+            
+            # Calculate metrics
+            latency_ms = (time.time() - start_time) * 1000
+            token_count = len(question.split()) + len(answer.split()) + len(context.split()) // 4
+            retrieved_chunks = context.count("---") + 1 if context else 0
+            
+            # Log to monitoring service
+            metrics = QueryMetrics(
+                query_id=query_id,
+                timestamp=datetime.now(),
+                question=question,
+                answer=answer,
+                provider=settings.LLM_PROVIDER,
+                latency_ms=latency_ms,
+                token_count=token_count,
+                retrieved_chunks=retrieved_chunks,
+                error=None,
+            )
+            get_monitoring_service().log_query(metrics)
+            
+            return answer
+            
+        except Exception as e:
+            latency_ms = (time.time() - start_time) * 1000
+            error = str(e)
+            
+            # Log error metrics
+            metrics = QueryMetrics(
+                query_id=query_id,
+                timestamp=datetime.now(),
+                question=question,
+                answer="",
+                provider=settings.LLM_PROVIDER,
+                latency_ms=latency_ms,
+                token_count=0,
+                retrieved_chunks=0,
+                error=error,
+            )
+            get_monitoring_service().log_query(metrics)
+            raise

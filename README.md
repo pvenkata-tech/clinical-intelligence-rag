@@ -51,7 +51,8 @@ graph TD
 - 🔐 De-identify PHI (HIPAA)  
 - ⚡ 20-30% fewer tokens (compression)  
 - 🔄 Any LLM (swap in `.env`)  
-- ✅ Validated (F:1.00, P:1.00)
+- ✅ Validated (F:1.00, P:1.00)  
+- 📊 Production Monitoring** (LangSmith tracing)
 
 ## Quality
 
@@ -68,6 +69,7 @@ graph TD
 - [API.md](docs/API.md) - REST API
 - [UI.md](docs/UI.md) - Dashboard
 - [FEATURES.md](docs/FEATURES.md) - Advanced
+- [MONITORING.md](docs/MONITORING.md) - 📊 LangSmith Tracing
 - [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) - Help
 - [DOCKER.md](docs/DOCKER.md) - Deploy
 - [ARCHITECTURE.md](docs/ARCHITECTURE.md) - Design
@@ -95,19 +97,15 @@ graph TD
 ✅ PHI De-identification (HIPAA)  
 ✅ Gold QA Benchmarks  
 ✅ Ragas Evaluation  
+✅ LangSmith Monitoring** (production observability)  
 
 ## Help
 
-[SETUP.md](docs/SETUP.md) • [API.md](docs/API.md) • [UI.md](docs/UI.md) • [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
+[SETUP.md](docs/SETUP.md) • [API.md](docs/API.md) • [MONITORING.md](docs/MONITORING.md) • [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
 
-`docker-compose up --build` → http://localhost:8501
-  "metrics": {
-    "faithfulness": 1.0,
-    "answer_relevancy": 0.98,
-    "context_precision": 1.0
-  }
-}
-```
+---
+
+## Evaluation
 
 **Run Evaluation:**
 ```bash

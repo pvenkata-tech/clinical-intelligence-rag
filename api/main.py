@@ -3,7 +3,8 @@ FastAPI application factory and configuration
 """
 
 from fastapi import FastAPI
-from api.routes import router
+from api.routes import router as query_router
+from api.monitoring_routes import router as monitoring_router
 from core.config import settings
 
 
@@ -16,7 +17,8 @@ def create_app() -> FastAPI:
     )
     
     # Include routers
-    app.include_router(router)
+    app.include_router(query_router)
+    app.include_router(monitoring_router)
     
     return app
 

@@ -12,6 +12,29 @@ docker-compose up --build
 # UI:   http://localhost:8501
 ```
 
+### Project Architecture
+
+```mermaid
+graph TD
+    A[📄 Clinical PDFs] --> B[🛠️ Ingestion Layer]
+    B -->|PHI Scrubbing| C[🧬 Embedding Layer]
+    C --> D[(🌲 Pinecone Vector DB)]
+    
+    subgraph "The RAG Engine"
+    D <--> E[🔍 Semantic Search]
+    E --> F[🏭 Provider Factory]
+    F -->|Bedrock / OpenAI / Claude| G[🧠 LLM Reasoning]
+    end
+    
+    G --> H[🚀 FastAPI Backend]
+    H --> I[💻 Streamlit Dashboard]
+    I --> J[🏥 Clinical Response]
+    
+    style D fill:#228b22,color:#fff
+    style G fill:#4b0082,color:#fff
+    style J fill:#000080,color:#fff
+```
+
 ## Features
 
 - 📄 Upload PDFs  

@@ -16,23 +16,31 @@ docker-compose up --build
 
 ```mermaid
 graph TD
-    A[📄 Clinical PDFs] --> B[🛠️ Ingestion Layer]
-    B -->|PHI Scrubbing| C[🧬 Embedding Layer]
-    C --> D[(🌲 Pinecone Vector DB)]
+    A["📄 Clinical PDFs"] --> B["🛠️ Ingestion<br/>(Parse & Chunk)"]
+    B -->|PHI Scrubbing| C["🧬 Embeddings<br/>(Multi-Provider)"]
+    C --> D[("🌲 Pinecone<br/>Vector DB")]
     
-    subgraph "The RAG Engine"
-    D <--> E[🔍 Semantic Search]
-    E --> F[🏭 Provider Factory]
-    F -->|Bedrock / OpenAI / Claude| G[🧠 LLM Reasoning]
+    subgraph RAG["⚙️ RAG Engine"]
+    D <-->|Semantic Search| E["🔍 Retrieval<br/>& Compression"]
+    E -->|Relevant Context| F["🏭 LLM Provider<br/>Selection"]
+    F -->|OpenAI/Anthropic/Bedrock| G["🧠 Generate<br/>Answer"]
     end
     
-    G --> H[🚀 FastAPI Backend]
-    H --> I[💻 Streamlit Dashboard]
-    I --> J[🏥 Clinical Response]
+    G -->|Grounded Response| H["🚀 FastAPI<br/>REST API"]
     
-    style D fill:#228b22,color:#fff
-    style G fill:#4b0082,color:#fff
-    style J fill:#000080,color:#fff
+    subgraph UI["👥 User Interface Layer"]
+    H --> I["💻 Streamlit<br/>Dashboard"]
+    I --> J["🏥 Clinical<br/>Intelligence"]
+    end
+    
+    style A fill:#e8f5e9
+    style D fill:#1b5e20,stroke:#fff,color:#fff,stroke-width:3px
+    style G fill:#4a148c,stroke:#fff,color:#fff,stroke-width:3px
+    style RAG fill:#f5f5f5,stroke:#666,stroke-width:2px
+    style UI fill:#fff3e0,stroke:#ff6f00,stroke-width:2px
+    style H fill:#ff9800,stroke:#fff,color:#fff,stroke-width:2px
+    style I fill:#ffb74d,stroke:#fff,color:#333,stroke-width:2px
+    style J fill:#0d2949,stroke:#fff,color:#fff,stroke-width:3px
 ```
 
 ## Features
@@ -64,9 +72,21 @@ graph TD
 - [DOCKER.md](docs/DOCKER.md) - Deploy
 - [ARCHITECTURE.md](docs/ARCHITECTURE.md) - Design
 
-## Tech
+## Tech Stack
 
-FastAPI • Streamlit • LangChain • Pinecone • Ragas • Docker
+| Layer | Technology | Purpose |
+|-------|-----------|---------|
+| **Backend API** | FastAPI | REST endpoints, async request handling |
+| **Frontend UI** | Streamlit | Interactive dashboard, document upload |
+| **LLM Orchestration** | LangChain | Chain-of-thought reasoning, prompt management |
+| **Vector Database** | Pinecone | Semantic search, embeddings storage |
+| **Evaluation** | Ragas Framework | RAG quality metrics (Faithfulness, Precision, Recall) |
+| **Containerization** | Docker + Compose | Production deployment, multi-service orchestration |
+| **LLM Providers** | OpenAI, Anthropic, AWS Bedrock | Multi-provider support (plug-and-play) |
+| **Embeddings** | OpenAI/Anthropic/Bedrock | Text-to-vector conversion |
+| **Testing** | Pytest | Unit + integration tests |
+| **Language** | Python 3.11+ | Core implementation language |
+| **Monitoring** | LangChain Tracing (LangSmith) | Debug RAG pipeline, token tracking, latency analysis |
 
 ## What's Inside
 
@@ -79,8 +99,6 @@ FastAPI • Streamlit • LangChain • Pinecone • Ragas • Docker
 ## Help
 
 [SETUP.md](docs/SETUP.md) • [API.md](docs/API.md) • [UI.md](docs/UI.md) • [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
-
-—
 
 `docker-compose up --build` → http://localhost:8501
   "metrics": {

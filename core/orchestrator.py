@@ -1,10 +1,19 @@
+import os
 from models.factory import ModelFactory
 from core.ingestion import ClinicalIngestor
+from core.config import settings
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
 class ClinicalRAGOrchestrator:
     def __init__(self):
+        # Initialize LangChain tracing if enabled
+        if settings.LANGCHAIN_TRACING_ENABLED:
+            os.environ["LANGCHAIN_TRACING_V2"] = "true"
+            if settings.LANGCHAIN_API_KEY:
+                os.environ["LANGCHAIN_API_KEY"] = settings.LANGCHAIN_API_KEY
+            print("🔍 LangChain tracing enabled - traces will be sent to LangSmith")
+        
         # Initialize the model using our flexible factory
         self.model = ModelFactory.get_model()
         self.ingestor = ClinicalIngestor()

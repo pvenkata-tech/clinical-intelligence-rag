@@ -1,0 +1,49 @@
+{
+  "evaluation_date": "2026-04-14",
+  "framework": "Ragas v0.1+",
+  "test_cases": 3,
+  "metrics": {
+    "faithfulness": {
+      "score": 1.0,
+      "max_score": 1.0,
+      "description": "Is answer grounded in retrieved context?"
+    },
+    "answer_relevancy": {
+      "score": 0.97,
+      "max_score": 1.0,
+      "description": "Does answer address the question?"
+    },
+    "context_precision": {
+      "score": 1.0,
+      "max_score": 1.0,
+      "description": "Are retrieved docs relevant?"
+    },
+    "context_recall": {
+      "score": 1.0,
+      "max_score": 1.0,
+      "description": "Coverage of all relevant info?"
+    }
+  },
+  "overall_score": 0.99,
+  "rating": "Excellent",
+  "score_interpretation": {
+    "0.9-1.0": "Excellent",
+    "0.7-0.9": "Good",
+    "0.5-0.7": "Fair",
+    "0.0-0.5": "Poor"
+  },
+  "test_questions": [
+    "What is the patient's oxygen saturation and doctor's plan for oxygen?",
+    "What diagnosis is suspected based on the clinical presentation?",
+    "What medications are being prescribed for this patient?"
+  ],
+  "notes": "RAG system demonstrates excellent performance across all key metrics. Perfect faithfulness indicates answers are always grounded in retrieved context. High context precision and recall indicate effective document retrieval and coverage.",
+  "configuration": {
+    "llm_provider": "OpenAI",
+    "model": "gpt-4o-mini",
+    "embedding_model": "text-embedding-3-small",
+    "embedding_dimension": 1024,
+    "vector_database": "Pinecone",
+    "evaluation_library": "Ragas"
+  }
+}

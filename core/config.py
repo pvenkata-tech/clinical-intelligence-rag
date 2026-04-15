@@ -25,5 +25,10 @@ class Settings:
     # Vector DB
     PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
     PINECONE_INDEX_NAME = os.getenv("PINECONE_INDEX_NAME", "clinical-rag")
+    
+    # LangChain Tracing (optional, for debugging and monitoring)
+    # Set LANGCHAIN_TRACING_V2=true and LANGCHAIN_API_KEY=your-key to enable
+    LANGCHAIN_TRACING_ENABLED = os.getenv("LANGCHAIN_TRACING_V2", "false").lower() == "true"
+    LANGCHAIN_API_KEY = os.getenv("LANGCHAIN_API_KEY", "")
 
 settings = Settings()

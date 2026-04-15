@@ -26,6 +26,8 @@ langchain-pinecone>=0.1.0
 fastapi==0.110.1
 # ASGI server to run FastAPI
 uvicorn==0.29.0
+# interactive web UI framework
+streamlit>=1.28.0
 # For environment variable management (.env)
 python-dotenv==1.0.1
 # Standard data validation
@@ -34,6 +36,8 @@ pydantic==2.7.0
 # --- Document Processing ---
 # Standard PDF parsing
 pypdf==4.2.0
+# Text splitting utilities for document chunking
+langchain-text-splitters>=0.0.1
 
 # --- Utilities & Performance ---
 # For handling data arrays and vector math

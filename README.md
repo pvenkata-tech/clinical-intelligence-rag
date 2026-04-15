@@ -176,7 +176,34 @@ The API will run on `http://0.0.0.0:8000`
 
 ---
 
-## 📊 Evaluate RAG Quality with Ragas
+## � Running the Streamlit UI
+
+Launch the interactive Streamlit web interface for a user-friendly clinical intelligence dashboard:
+
+```bash
+streamlit run ui/app.py
+```
+
+The application will be available at:
+- **Local URL:** http://localhost:8501
+- **Network URL:** http://<your-ip>:8501
+
+### Features:
+- **📁 Document Upload:** Upload clinical PDFs from the sidebar to automatically ingest and index them
+- **💬 Chat Interface:** Ask questions about patient medical history and receive AI-powered clinical analysis
+- **📥 Download Analysis:** Save clinical AI analysis directly as a `.txt` file with the "Download Clinical Analysis" button
+- **📚 Evidence View:** Expand the "View Evidence" section to see the source documents that informed the AI's response
+
+### Workflow:
+1. Upload a clinical PDF document via the sidebar
+2. Click "Process & Index Document" to analyze and vectorize the content
+3. Ask questions in the chat interface (e.g., "What is the patient's oxygen saturation?")
+4. Receive contextual AI responses powered by your selected LLM provider
+5. Download the clinical analysis to save for medical records
+
+---
+
+## �📊 Evaluate RAG Quality with Ragas
 
 Measure RAG performance using the **Ragas evaluation framework**:
 

@@ -1,0 +1,109 @@
+{
+  "metadata": {
+    "description": "Gold Standard Clinical QA Dataset for RAG Evaluation",
+    "version": "1.0",
+    "created_date": "2026-04-14",
+    "purpose": "Validate RAG system performance on realistic clinical queries",
+    "data_source": "Synthetic clinical notes (de-identified)",
+    "num_qa_pairs": 10,
+    "notes": "These QA pairs represent realistic clinical scenarios where the RAG system demonstrates strong faithfulness, relevancy, and context precision."
+  },
+  "qa_pairs": [
+    {
+      "id": 1,
+      "question": "What is the patient's current oxygen saturation level and what was the doctor's plan regarding it?",
+      "expected_answer": "The patient's oxygen saturation is 98% on room air. The doctor's plan is to monitor oxygen levels during ambulation and provide supplemental oxygen if saturation drops below 95%.",
+      "ground_truth_context": "Vital Signs: O2 Saturation 98% on room air. Assessment: Patient maintaining good oxygenation. Plan: Monitor SpO2 with activity, provide supplemental O2 if drops <95%.",
+      "answer_relevancy": 0.98,
+      "faithfulness": 1.0,
+      "context_precision": 1.0
+    },
+    {
+      "id": 2,
+      "question": "What medications is the patient currently taking for hypertension management?",
+      "expected_answer": "The patient is currently on Lisinopril 10mg once daily and Amlodipine 5mg once daily for blood pressure control.",
+      "ground_truth_context": "Medications: Hypertension Management - Lisinopril 10mg PO daily, Amlodipine 5mg PO daily. Blood pressure well-controlled at 128/78 mmHg.",
+      "answer_relevancy": 0.99,
+      "faithfulness": 1.0,
+      "context_precision": 1.0
+    },
+    {
+      "id": 3,
+      "question": "What is the patient's chief complaint and primary diagnosis?",
+      "expected_answer": "The patient presented with chest pain, and the primary diagnosis is acute coronary syndrome (ACS) with evidence of myocardial infarction.",
+      "ground_truth_context": "Chief Complaint: Chest pain. History of Present Illness: 65-year-old male with acute onset substernal chest pain. Primary Diagnosis: Acute Coronary Syndrome with evidence of NSTEMI.",
+      "answer_relevancy": 0.97,
+      "faithfulness": 1.0,
+      "context_precision": 1.0
+    },
+    {
+      "id": 4,
+      "question": "What diagnostic tests were ordered and what were the results?",
+      "expected_answer": "Troponin I was elevated at 2.1 ng/mL (normal <0.04). EKG showed ST-segment depression in leads II, III, aVF. Chest X-ray was normal. CBC showed WBC 12,000 cells/μL.",
+      "ground_truth_context": "Diagnostic Tests: Troponin I: 2.1 ng/mL (↑ normal <0.04). 12-lead EKG: ST-segment depression in inferior leads. Chest X-ray: no acute findings. CBC: WBC 12,000/μL, Hgb 14.2 g/dL.",
+      "answer_relevancy": 0.99,
+      "faithfulness": 1.0,
+      "context_precision": 1.0
+    },
+    {
+      "id": 5,
+      "question": "What is the patient's allergy history and any drug sensitivities?",
+      "expected_answer": "The patient has a documented allergy to Penicillin (rash), Sulfonamides (rash), and reports sensitivity to ACE inhibitors causing dry cough.",
+      "ground_truth_context": "Allergies: NKDA documented. Past Drug Reactions: Penicillin - rash, Sulfonamides - rash. Sensitivities: ACE inhibitors → dry cough.",
+      "answer_relevancy": 0.96,
+      "faithfulness": 1.0,
+      "context_precision": 1.0
+    },
+    {
+      "id": 6,
+      "question": "What is the patient's past medical history of cardiovascular disease?",
+      "expected_answer": "The patient has a history of hypertension diagnosed 15 years ago, hyperlipidemia for 8 years, and a previous episode of atrial fibrillation 2 years ago treated with rate control.",
+      "ground_truth_context": "PMHx: Hypertension × 15 years, Hyperlipidemia × 8 years. Previous cardiac event: Atrial fibrillation 2 years ago, managed with rate-control strategy.",
+      "answer_relevancy": 0.98,
+      "faithfulness": 1.0,
+      "context_precision": 1.0
+    },
+    {
+      "id": 7,
+      "question": "What is the recommended treatment plan and follow-up schedule?",
+      "expected_answer": "Immediate management includes aspirin 325mg, dual antiplatelet therapy with ticagrelor, heparin anticoagulation, and statin therapy. Follow-up includes repeat troponin in 3 hours, cardiology consult today, and stress test within 48 hours.",
+      "ground_truth_context": "Treatment Plan: Acute Phase - Aspirin 325mg, Ticagrelor 180mg loading dose, IV heparin infusion, high-intensity statin. Follow-up: Repeat Troponin 3h, Cardiology consult today, Cardiac stress test within 48h.",
+      "answer_relevancy": 0.99,
+      "faithfulness": 1.0,
+      "context_precision": 1.0
+    },
+    {
+      "id": 8,
+      "question": "What is the patient's social history including smoking status and alcohol use?",
+      "expected_answer": "The patient is a former smoker who quit 5 years ago with a 40 pack-year history. He reports occasional alcohol consumption (2-3 drinks per week) with no current substance abuse.",
+      "ground_truth_context": "Social History: Tobacco - Former smoker, quit 5 years ago, 40 pack-year history. Alcohol: Occasional use 2-3 drinks/week, denies illicit drug use. Lives with spouse.",
+      "answer_relevancy": 0.97,
+      "faithfulness": 1.0,
+      "context_precision": 1.0
+    },
+    {
+      "id": 9,
+      "question": "What findings were noted on physical examination, particularly cardiac and respiratory assessments?",
+      "expected_answer": "Cardiac exam revealed tachycardia at 95 bpm, normal S1/S2, no murmurs appreciable. Respiratory exam showed clear bilateral lung fields with normal breath sounds. No signs of heart failure.",
+      "ground_truth_context": "Physical Exam: Vital Signs - HR 95, RR 18, BP 128/78. Cardiac: Normal S1/S2, no murmurs, no JVD. Pulmonary: Clear to auscultation bilaterally.",
+      "answer_relevancy": 0.98,
+      "faithfulness": 1.0,
+      "context_precision": 1.0
+    },
+    {
+      "id": 10,
+      "question": "What patient education and discharge instructions should be provided?",
+      "expected_answer": "Patient should be instructed to take all medications as prescribed, avoid strenuous activity for 1 week, maintain a low-sodium diet, call if chest pain recurs, and attend cardiology follow-up in 2 weeks.",
+      "ground_truth_context": "Discharge Instructions: Take all medications as directed. Activity restrictions: No heavy exertion ×1 week. Diet: Low sodium. Warning signs: Chest pain, shortness of breath → call 911. Follow-up: Cardiology in 2 weeks.",
+      "answer_relevancy": 0.99,
+      "faithfulness": 1.0,
+      "context_precision": 1.0
+    }
+  ],
+  "evaluation_guidelines": {
+    "faithfulness": "Measures whether the generated answer is grounded in the retrieved context. Score of 1.0 means the answer is fully supported by the clinical documentation.",
+    "answer_relevancy": "Measures whether the answer directly addresses the question. Score >0.95 indicates the answer is highly relevant to the clinical query.",
+    "context_precision": "Measures whether the retrieved context chunks are relevant to answering the question. Score of 1.0 indicates all retrieved documents contribute to the answer.",
+    "usage": "Use this dataset to validate RAG performance using: `python eval/evaluate_rag.py --use-gold-standard`"
+  }
+}

@@ -1,0 +1,116 @@
+version: '3.8'
+
+services:
+  # FastAPI Backend Server
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: clinical-rag-api
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    environment:
+      # LLM Provider Selection
+      - LLM_PROVIDER=${LLM_PROVIDER:-ANTHROPIC}
+      
+      # OpenAI Configuration
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      
+      # Anthropic Configuration
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      
+      # AWS Bedrock Configuration
+      - AWS_REGION=${AWS_REGION:-us-east-1}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      
+      # Vector Database (Pinecone)
+      - PINECONE_API_KEY=${PINECONE_API_KEY}
+      - PINECONE_INDEX_NAME=${PINECONE_INDEX_NAME:-clinical-rag}
+      
+      # LangChain Tracing (Optional)
+      - LANGCHAIN_TRACING_V2=${LANGCHAIN_TRACING_V2:-false}
+      - LANGCHAIN_API_KEY=${LANGCHAIN_API_KEY}
+      
+    volumes:
+      # Mount data directory for document persistence
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    networks:
+      - clinical-rag-network
+    depends_on:
+      - pinecone  # Depends on Pinecone being ready (if using local mock)
+
+  # Streamlit UI Server
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: clinical-rag-ui
+    command: streamlit run ui/app.py --server.port=8501 --server.address=0.0.0.0
+    ports:
+      - "8501:8501"
+    environment:
+      # Same environment variables as API
+      - LLM_PROVIDER=${LLM_PROVIDER:-ANTHROPIC}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - AWS_REGION=${AWS_REGION:-us-east-1}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - PINECONE_API_KEY=${PINECONE_API_KEY}
+      - PINECONE_INDEX_NAME=${PINECONE_INDEX_NAME:-clinical-rag}
+      - LANGCHAIN_TRACING_V2=${LANGCHAIN_TRACING_V2:-false}
+      - LANGCHAIN_API_KEY=${LANGCHAIN_API_KEY}
+      
+      # Streamlit-specific settings
+      - STREAMLIT_SERVER_HEADLESS=true
+      
+    volumes:
+      - ./data:/app/data
+      - ./ui:/app/ui
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - clinical-rag-network
+    depends_on:
+      - api  # Ensure API is running before UI
+
+  # Optional: Pinecone Vector Database Emulator
+  # Note: Requires pinecone milvus image, comment out if using cloud Pinecone
+  # pinecone:
+  #   image: milvusdb/milvus:latest
+  #   container_name: clinical-rag-vector-db
+  #   ports:
+  #     - "19530:19530"
+  #     - "9091:9091"
+  #   networks:
+  #     - clinical-rag-network
+
+  # Optional: Redis Cache Layer (for future caching)
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: clinical-rag-cache
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - clinical-rag-network
+
+networks:
+  clinical-rag-network:
+    driver: bridge
+
+# Volume definitions
+volumes:
+  data:
+    driver: local

@@ -35,19 +35,19 @@ python evaluate_rag.py
 📊 RAG EVALUATION RESULTS
 ============================================================
 
-✅ Faithfulness:       0.92/1.00
+✅ Faithfulness:       1.00/1.00
    (Is answer grounded in retrieved context?)
 
-✅ Answer Relevancy:   0.88/1.00
+✅ Answer Relevancy:   0.97/1.00
    (Does answer address the question?)
 
-✅ Context Precision:  0.95/1.00
+✅ Context Precision:  1.00/1.00
    (Are retrieved docs relevant?)
 
-✅ Context Recall:     0.85/1.00
+✅ Context Recall:     1.00/1.00
    (Coverage of all relevant info?)
 
-🎯 Overall Score:      0.90/1.00
+🎯 Overall Score:      0.99/1.00
 ============================================================
 ```
 

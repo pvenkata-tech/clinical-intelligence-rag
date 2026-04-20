@@ -2,7 +2,7 @@
 
 [![Overall: 0.99](https://img.shields.io/badge/Overall-0.99-brightgreen)](eval_results.json) [![Faithfulness: 1.00](https://img.shields.io/badge/Faithfulness-1.00-brightgreen)](eval_results.json) [![Precision: 1.00](https://img.shields.io/badge/Precision-1.00-brightgreen)](eval_results.json)
 
-**Production RAG for medical documents.** Answer clinical questions. Swap LLMs (OpenAI/Anthropic/Bedrock) in `.env`.
+A privacy-first RAG pipeline designed for healthcare, implementing PII scrubbing and AWS Bedrock integration to ensure HIPAA-compliant AI inference.
 
 ## Quick Start
 
